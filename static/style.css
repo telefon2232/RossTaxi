@@ -1,0 +1,43 @@
+
+
+select {
+
+    appearance: none;
+
+    background-color: transparent;
+    border: 2px solid black;
+
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 30%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+}
+
+#sub {
+    background-color: #00A3F6;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.text_titles{
+    color: #0071C5;
+    font-size:20px;
+}
+
+.rightpic {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    margin: 0 0 5px 5px;
+}
+.super_div{
+
+}
