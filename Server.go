@@ -114,7 +114,7 @@ func internalPageHandler(response http.ResponseWriter, request *http.Request) {
 var router = mux.NewRouter()
 
 func main() {
-
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	router.HandleFunc("/", indexPageHandler)
 	router.HandleFunc("/internal", internalPageHandler)
 
