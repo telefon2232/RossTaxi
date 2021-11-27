@@ -1,43 +1,84 @@
+body {
+    background: rgb(34,54,56);
+    background: linear-gradient(90deg, rgba(34,54,56,1) 0%, rgba(70,107,109,1) 100%);
+    font-family: Arial, sans-serif ;
+}
 
+.main-block {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    min-width: 1027px;
+    min-height: 500px;
+    display: flex;
+}
+
+.name-block {
+    position: relative;
+    padding: 30px 79px 180px 79px;
+    width: 40%;
+    border-radius: 20px 0 0 20px;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+img {
+    position: absolute;
+    margin-top: 140px;
+    margin-left: -110px;
+    display: block;
+    width: 110%;
+}
+
+.auth-block {
+    width: 60%;
+    padding: 97px 79px 180px 79px;
+    border-radius: 0 20px 20px 0;
+    background-color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin: 0 0 25px 0;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    font-size: inherit;
+}
+
+button {
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: #36bcc5;
+    cursor: pointer;
+    font-size: inherit;
+}
 
 select {
+    padding: 15px;
 
-    appearance: none;
+    border-radius: 10px;
+    border: none;
+    background-color: #f0f0f0;
 
-    background-color: transparent;
-    border: 2px solid black;
-
-    padding: 0 1em 0 0;
-    margin: 0;
-    width: 30%;
-    font-family: inherit;
+    margin: 0 0 25px 0;
+    width: 100%;
     font-size: inherit;
-    cursor: inherit;
+    cursor: pointer;
     line-height: inherit;
 }
 
-#sub {
-    background-color: #00A3F6;
-    border: none;
-    color: white;
-    padding: 8px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
-
-.text_titles{
-    color: #0071C5;
-    font-size:20px;
-}
-
-.rightpic {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    margin: 0 0 5px 5px;
-}
-.super_div{
-
+h1{
+    color: #13474a;
 }
