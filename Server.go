@@ -10,6 +10,7 @@ import (
 
 type Hello struct {
 	Hi string
+	Rol string
 }
 
 // cookie handling
@@ -27,10 +28,21 @@ func getUserName(request *http.Request) (userName string) {
 	}
 	return userName
 }
+func getRole(request *http.Request) (role string) {
+	if cookie, err := request.Cookie("session"); err == nil {
+		cookieValue := make(map[string]string)
+		if err = cookieHandler.Decode("session", cookie.Value, &cookieValue); err == nil {
+			role = cookieValue["role"]
+		}
+	}
+	return role
+}
 
-func setSession(userName string, response http.ResponseWriter) {
+func setSession(userName string,password string, role string, response http.ResponseWriter) {
 	value := map[string]string{
 		"name": userName,
+		"password":password,
+		"role": role,
 	}
 	if encoded, err := cookieHandler.Encode("session", value); err == nil {
 		cookie := &http.Cookie{
@@ -55,12 +67,15 @@ func clearSession(response http.ResponseWriter) {
 // login handler
 
 func loginHandler(response http.ResponseWriter, request *http.Request) {
+
 	name := request.FormValue("name")
 	pass := request.FormValue("password")
+	role :=request.FormValue("who")
+
 	redirectTarget := "/"
 	if name != "" && pass != "" {
 		// .. check credentials ..
-		setSession(name, response)
+		setSession(name,pass,role, response)
 		redirectTarget = "/internal"
 	}
 	http.Redirect(response, request, redirectTarget, 302)
@@ -90,8 +105,9 @@ func indexPageHandler(response http.ResponseWriter, request *http.Request) {
 
 
 
-func internalPageHandler(response http.ResponseWriter, request *http.Request) {
+/*func internalPageHandler(response http.ResponseWriter, request *http.Request) {
 	userName := getUserName(request)
+	role:=getRole(request)
 	if userName != "" {
 
 		var indexPage,err = template.ParseFiles("lk.html")
@@ -99,17 +115,40 @@ func internalPageHandler(response http.ResponseWriter, request *http.Request) {
 			fmt.Println(err)
 			return
 		}
-		indexPage.Execute(response,Hello{userName})
-
-
-
-
+		indexPage.Execute(response,Hello{userName,role})
 	} else {
 		http.Redirect(response, request, "/", 302)
 	}
+}*/
+
+
+func internalPageHandler(response http.ResponseWriter, request *http.Request) {
+	userName := getUserName(request)
+	role:=getRole(request)
+	page:=""
+	if userName != "" {
+		if role == "I'm client"{
+			page= "StatusForUser.html"
+		} else if role == "I'm taxi driver"{
+			page= "StatusForDriver.html"
+		}
+		if userName != "" {
+			var indexPage,err = template.ParseFiles(page)
+			if err!=nil{
+				fmt.Println(err)
+				return
+			}
+			indexPage.Execute(response,Hello{userName,role})
+		} else {
+			http.Redirect(response, request, "/", 302)
+		}
+
+	}
+
 }
 
-// server main method
+
+
 
 var router = mux.NewRouter()
 

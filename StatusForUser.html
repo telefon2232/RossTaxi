@@ -1,14 +1,11 @@
 <html>
 <head>
-    <title>Personal Area </title>
+    <title>User Status</title>
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 
-<h1>You're insight!</h1>
-
-<h1>User: {{.Hi}}</h1>
-<h1>Role: {{.Rol}}</h1>
+<h1>Hello, User ({{.Hi}})</h1>
 <form method="post" action="/logout">
     <button type="submit">Logout</button>
 </form>
