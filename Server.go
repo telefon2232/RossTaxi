@@ -101,25 +101,6 @@ func indexPageHandler(response http.ResponseWriter, request *http.Request) {
 	indexPage.Execute(response,"")
 }
 
-// internal page
-
-
-
-/*func internalPageHandler(response http.ResponseWriter, request *http.Request) {
-	userName := getUserName(request)
-	role:=getRole(request)
-	if userName != "" {
-
-		var indexPage,err = template.ParseFiles("lk.html")
-		if err!=nil{
-			fmt.Println(err)
-			return
-		}
-		indexPage.Execute(response,Hello{userName,role})
-	} else {
-		http.Redirect(response, request, "/", 302)
-	}
-}*/
 
 
 func internalPageHandler(response http.ResponseWriter, request *http.Request) {

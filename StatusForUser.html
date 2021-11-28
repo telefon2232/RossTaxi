@@ -6,6 +6,17 @@
 <body>
 
 <h1>Hello, User ({{.Hi}})</h1>
+
+
+<form method="post" action="/login">
+    <input type="text" id="AddressFrom" name="AddressFrom" placeholder="AddressFrom">
+    <input type="text" id="AddressTo" name="AddressTo" placeholder="AddressTo">
+    <button type="submit">Find best path</button>
+</form>
+
+
+
+
 <form method="post" action="/logout">
     <button type="submit">Logout</button>
 </form>
