@@ -9,15 +9,26 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 .content {
     min-width: 1027px;
     min-height: 500px;
     display: flex;
+    border-radius: 20px;
+    background-color: white;
 }
 
-.name-block {
+.userInfo {
+    min-width: 1027px;
+    min-height: 500px;
+    padding: 97px 79px 0 79px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.name-block, .viewWomen {
     position: relative;
     padding: 30px 79px 180px 79px;
     width: 40%;
@@ -28,10 +39,19 @@ body {
 
 img {
     position: absolute;
+    display: block;
+}
+
+.name-block img {
     margin-top: 140px;
     margin-left: -110px;
-    display: block;
     width: 110%;
+}
+
+.viewWomen img {
+    margin-top: 20px;
+    margin-left: -10px;
+    width: 60%;
 }
 
 .auth-block {
