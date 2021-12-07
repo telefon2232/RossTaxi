@@ -2,13 +2,10 @@ package main
 
 import (
 	"net/http"
-	"strings"
 )
 
 import (
-	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
 	"html/template"
@@ -134,30 +131,11 @@ func internalPageHandler(response http.ResponseWriter, request *http.Request) {
 
 var router = mux.NewRouter()
 
-const (
-	userName = "Andrey14045"
-	password = "1488"
-	ip       = "127.0.0.1"
-	port     = "3306"
-)
+
 
 func main() {
 	// Connect to DataBase
-	dbName := "rosstaxi"
-	path := strings.Join([]string{userName, ":", password, "@tcp(", ip, ":", port, ")/", dbName, "?charset=utf8"}, "")
-	db, err := sql.Open("mysql", path)
-	if err != nil {
-		panic(err)
-	}
 
-	defer db.Close()
-
-	insert, err := db.Query("INSERT  INTO users VALUES('VlaDick')")
-
-	if err != nil {
-		panic(err)
-	}
-	defer insert.Close()
 	//
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	router.HandleFunc("/", indexPageHandler)
