@@ -1,15 +1,21 @@
 package main
 
 import (
+	"net/http"
+	"strings"
+)
+
+import (
+	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
 	"html/template"
-	"net/http"
 )
 
 type Hello struct {
-	Hi string
+	Hi  string
 	Rol string
 }
 
@@ -26,6 +32,7 @@ func getUserName(request *http.Request) (userName string) {
 			userName = cookieValue["name"]
 		}
 	}
+
 	return userName
 }
 func getRole(request *http.Request) (role string) {
@@ -38,11 +45,11 @@ func getRole(request *http.Request) (role string) {
 	return role
 }
 
-func setSession(userName string,password string, role string, response http.ResponseWriter) {
+func setSession(userName string, password string, role string, response http.ResponseWriter) {
 	value := map[string]string{
-		"name": userName,
-		"password":password,
-		"role": role,
+		"name":     userName,
+		"password": password,
+		"role":     role,
 	}
 	if encoded, err := cookieHandler.Encode("session", value); err == nil {
 		cookie := &http.Cookie{
@@ -70,12 +77,12 @@ func loginHandler(response http.ResponseWriter, request *http.Request) {
 
 	name := request.FormValue("name")
 	pass := request.FormValue("password")
-	role :=request.FormValue("who")
+	role := request.FormValue("who")
 
 	redirectTarget := "/"
 	if name != "" && pass != "" {
 		// .. check credentials ..
-		setSession(name,pass,role, response)
+		setSession(name, pass, role, response)
 		redirectTarget = "/internal"
 	}
 	http.Redirect(response, request, redirectTarget, 302)
@@ -90,36 +97,33 @@ func logoutHandler(response http.ResponseWriter, request *http.Request) {
 
 // index page
 
-
 func indexPageHandler(response http.ResponseWriter, request *http.Request) {
 
-	var indexPage,err = template.ParseFiles("index.html")
-	if err!=nil{
+	var indexPage, err = template.ParseFiles("index.html")
+	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	indexPage.Execute(response,"")
+	indexPage.Execute(response, "")
 }
-
-
 
 func internalPageHandler(response http.ResponseWriter, request *http.Request) {
 	userName := getUserName(request)
-	role:=getRole(request)
-	page:=""
+	role := getRole(request)
+	page := ""
 	if userName != "" {
-		if role == "I'm client"{
-			page= "StatusForUser.html"
-		} else if role == "I'm taxi driver"{
-			page= "StatusForDriver.html"
+		if role == "I'm client" {
+			page = "StatusForUser.html"
+		} else if role == "I'm taxi driver" {
+			page = "StatusForDriver.html"
 		}
 		if userName != "" {
-			var indexPage,err = template.ParseFiles(page)
-			if err!=nil{
+			var indexPage, err = template.ParseFiles(page)
+			if err != nil {
 				fmt.Println(err)
 				return
 			}
-			indexPage.Execute(response,Hello{userName,role})
+			indexPage.Execute(response, Hello{userName, role})
 		} else {
 			http.Redirect(response, request, "/", 302)
 		}
@@ -128,12 +132,33 @@ func internalPageHandler(response http.ResponseWriter, request *http.Request) {
 
 }
 
-
-
-
 var router = mux.NewRouter()
 
+const (
+	userName = "Andrey14045"
+	password = "1488"
+	ip       = "127.0.0.1"
+	port     = "3306"
+)
+
 func main() {
+	// Connect to DataBase
+	dbName := "rosstaxi"
+	path := strings.Join([]string{userName, ":", password, "@tcp(", ip, ":", port, ")/", dbName, "?charset=utf8"}, "")
+	db, err := sql.Open("mysql", path)
+	if err != nil {
+		panic(err)
+	}
+
+	defer db.Close()
+
+	insert, err := db.Query("INSERT  INTO users VALUES('VlaDick')")
+
+	if err != nil {
+		panic(err)
+	}
+	defer insert.Close()
+	//
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	router.HandleFunc("/", indexPageHandler)
 	router.HandleFunc("/internal", internalPageHandler)
