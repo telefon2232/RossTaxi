@@ -1,0 +1,13 @@
+CREATE DATABASE test;
+USE test;
+CREATE TABLE users (
+	ID CHAR(5),
+	role VARCHAR(10),
+	login VARCHAR(20),
+	password VARCHAR(12),
+	PRIMARY KEY(ID)
+);
+INSERT INTO users VALUES (00001, 'driver', 'Pavel', '123');
+INSERT INTO users VALUES (00002, 'passenger', 'Vlad', '123');
+INSERT INTO users VALUES (00003, 'admin', 'Polina', '123');
+INSERT INTO users VALUES (00004, 'passenger', 'Andrew', '123');
