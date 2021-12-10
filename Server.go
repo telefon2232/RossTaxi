@@ -15,7 +15,7 @@ type Hello struct {
 	Hi  string
 	Rol string
 }
-
+var user_cache = make([][]string , 30)
 // cookie handling
 
 var cookieHandler = securecookie.New(
@@ -92,6 +92,12 @@ func logoutHandler(response http.ResponseWriter, request *http.Request) {
 	http.Redirect(response, request, "/", 302)
 }
 
+func addressHandler(response http.ResponseWriter, request *http.Request){
+	fmt.Println(request.FormValue("AddressFrom"))
+
+
+}
+
 // index page
 
 func indexPageHandler(response http.ResponseWriter, request *http.Request) {
@@ -108,18 +114,27 @@ func internalPageHandler(response http.ResponseWriter, request *http.Request) {
 	userName := getUserName(request)
 	role := getRole(request)
 	page := ""
+	flag:=false
+	for i:=0;i<len(user_cache);i++{
+		if user_cache[i][1] == userName{
+			break
+			flag=true
+		}
+	}
+	if !flag{
+	//	user_cache = append(user_cache, "Client") ВЕРНИ МЕНЯ
+	}
+
 	if userName != "" {
 		if role == "I'm client" {
 			page = "StatusForUser.html"
 		} else if role == "I'm taxi driver" {
 			page = "StatusForDriver.html"
 		}
-		if userName != "" {
 			var indexPage, err = template.ParseFiles(page)
 			if err != nil {
 				fmt.Println(err)
 				return
-			}
 			indexPage.Execute(response, Hello{userName, role})
 		} else {
 			http.Redirect(response, request, "/", 302)
@@ -136,6 +151,9 @@ var router = mux.NewRouter()
 func main() {
 	// Connect to DataBase
 
+
+
+
 	//
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	router.HandleFunc("/", indexPageHandler)
@@ -143,6 +161,7 @@ func main() {
 
 	router.HandleFunc("/login", loginHandler).Methods("POST")
 	router.HandleFunc("/logout", logoutHandler).Methods("POST")
+	router.HandleFunc("/address", addressHandler).Methods("POST")
 
 	http.Handle("/", router)
 	http.ListenAndServe(":80", nil)
