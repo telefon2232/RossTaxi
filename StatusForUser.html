@@ -12,6 +12,7 @@
             <div class="auth-block">
                 <h2>Hello, User ({{.Hi}})</h2>
                 <form method="post" action="/address">
+                    <input type="text" id="How_can_I_call_you" name="Nickname" placeholder="How can I call you?">
                     <input type="text" id="AddressFrom" name="AddressFrom" placeholder="AddressFrom">
                     <input type="text" id="AddressTo" name="AddressTo" placeholder="AddressTo">
                     <button type="submit">Find best path</button>
