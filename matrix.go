@@ -109,7 +109,94 @@ func main() {
 		}
 	}
 
-	fillMatrix(relateMatrix)
+	relateMatrix[0][1] = 1
+	relateMatrix[0][20] = 1
+	relateMatrix[1][0] = 1
+	relateMatrix[20][0] = 1
+
+	relateMatrix[1][2] = 1
+	relateMatrix[1][17] = 1
+	relateMatrix[2][1] = 1
+	relateMatrix[17][1] = 1
+
+	relateMatrix[2][3] = 1
+	relateMatrix[2][17] = 1
+	relateMatrix[3][2] = 1
+	relateMatrix[17][2] = 1
+
+	relateMatrix[3][4] = 1
+	relateMatrix[3][14] = 1
+	relateMatrix[3][16] = 1
+	relateMatrix[4][3] = 1
+	relateMatrix[14][3] = 1
+	relateMatrix[16][3] = 1
+
+	relateMatrix[4][5] = 1
+	relateMatrix[4][12] = 1
+	relateMatrix[5][4] = 1
+	relateMatrix[12][4] = 1
+	relateMatrix[5][6] = 1
+	relateMatrix[5][11] = 1
+	relateMatrix[6][5] = 1
+	relateMatrix[11][5] = 1
+
+	relateMatrix[6][7] = 1
+	relateMatrix[7][6] = 1
+
+	relateMatrix[7][8] = 1
+	relateMatrix[8][7] = 1
+
+	relateMatrix[8][9] = 1
+	relateMatrix[9][8] = 1
+
+	relateMatrix[9][10] = 1
+	relateMatrix[10][9] = 1
+
+	relateMatrix[10][11] = 1
+	relateMatrix[10][13] = 1
+	relateMatrix[11][10] = 1
+	relateMatrix[13][10] = 1
+
+	relateMatrix[11][12] = 1
+	relateMatrix[12][11] = 1
+
+	relateMatrix[12][13] = 1
+	relateMatrix[12][14] = 1
+	relateMatrix[13][12] = 1
+	relateMatrix[14][12] = 1
+
+	relateMatrix[13][15] = 1
+	relateMatrix[15][13] = 1
+
+	relateMatrix[14][15] = 1
+	relateMatrix[15][14] = 1
+
+	relateMatrix[15][18] = 1
+	relateMatrix[18][15] = 1
+
+	relateMatrix[16][17] = 1
+	relateMatrix[16][18] = 1
+	relateMatrix[17][16] = 1
+	relateMatrix[18][16] = 1
+
+	relateMatrix[17][19] = 1
+	relateMatrix[19][17] = 1
+
+	relateMatrix[18][22] = 1
+	relateMatrix[22][18] = 1
+
+	relateMatrix[19][20] = 1
+	relateMatrix[19][21] = 1
+	relateMatrix[20][19] = 1
+	relateMatrix[21][19] = 1
+
+	relateMatrix[20][21] = 1
+	relateMatrix[21][20] = 1
+
+	relateMatrix[21][22] = 1
+	relateMatrix[22][21] = 1
+
+	//fillMatrix(relateMatrix)
 
 	//Инициализация вершин и расстояний
 	for i:=0; i < size; i++ {
