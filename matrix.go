@@ -98,7 +98,7 @@ func fillMatrix(matrix *[size][size]int) {
 	matrix[22][21] = 1
 }
 
-func Dijkstra(begin int,end int, matrix *[size][size]int) (Rows [5]int) {
+func Dijkstra(begin int,end int, matrix *[size][size]int) (Rows [20]int) {
 	var beginIndex = begin //индекс начальной вершины
 	var endIndex = end // индекс конечной вершины
 	relateMatrix := [size][size]int{} //матрица связей
@@ -182,7 +182,7 @@ func Dijkstra(begin int,end int, matrix *[size][size]int) (Rows [5]int) {
 		}
 	}
 
-	Rows = [5]int{}
+	Rows = [20]int{}
 	for i:=prevNodeIndex - 1; i >= 0; i-- {
 		Rows[i] = visitedNodes[i] - 1
 		//fmt.Println("", visitedNodes[i] - 1)
@@ -206,11 +206,13 @@ func main() {
         os.Exit(2)
     }
 	relateMat := [size][size]int{} //матрица связей
-	Row := [5]int{}
+	Row := [20]int{}
 	Row = Dijkstra(beginIndex, endIndex, &relateMat)
 	// Вывод пути (начальная вершина оказалась в конце массива из k элементов)
 	fmt.Println("Вывод кратчайшего пути")
-	for i := 0; i < 5; i++ {
-		fmt.Println(" ", Row[i])
+	for i := 19; i >= 0; i-- {
+		if Row[i] != 0 {
+			fmt.Println(" ", Row[i])
+		}
 	}
 }
