@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
 
 const size = 23
 
@@ -93,13 +98,15 @@ func fillMatrix(matrix *[size][size]int) {
 	matrix[22][21] = 1
 }
 
-func main() {
+func Dijkstra(begin int,end int, matrix *[size][size]int) (Rows [5]int) {
+	var beginIndex = begin //индекс начальной вершины
+	var endIndex = end // индекс конечной вершины
 	relateMatrix := [size][size]int{} //матрица связей
 	minDistance := [size]int{} //минимальное расстояние
 	visitedArr := [size]int{} //посещенные вершины
 
 	var temp, minIndex, min int
-	var beginIndex = 5 //индекс начальной вершины
+	
 
 	for i:=0; i < size; i++ {
 		relateMatrix[i][i] = 0
@@ -108,8 +115,6 @@ func main() {
 			relateMatrix[j][i] = 0
 		}
 	}
-
-	
 
 	fillMatrix(&relateMatrix)
 
@@ -149,15 +154,15 @@ func main() {
 		}
 	}
 	// Вывод кратчайших расстояний до вершин
-	fmt.Print("Кратчайшие расстояния до вершин: ")
-	for i:=0; i < size; i++ {
-		fmt.Println("", i)
-		fmt.Println("", minDistance[i])
-	}
+	//fmt.Print("Кратчайшие расстояния до вершин: ")
+	//for i:=0; i < size; i++ {
+	//	fmt.Println("", i)
+	//	fmt.Println("", minDistance[i])
+	//}
 
 	// Восстановление пути
 	visitedNodes := [size]int{} // массив посещенных вершин
-	var endIndex = 15 // индекс конечной вершины = 5 - 1
+	
 	visitedNodes[0] = endIndex + 1 // начальный элемент - конечная вершина
 	var prevNodeIndex = 1 // индекс предыдущей вершины
 	var weightNode = minDistance[endIndex] // вес конечной вершины
@@ -177,9 +182,35 @@ func main() {
 		}
 	}
 
+	Rows = [5]int{}
+	for i:=prevNodeIndex - 1; i >= 0; i-- {
+		Rows[i] = visitedNodes[i] - 1
+		//fmt.Println("", visitedNodes[i] - 1)
+	}
+	return Rows
+}
+
+func main() {
+	//индекс начальной вершины
+	beginIndex, err := strconv.Atoi(os.Args[1]) 
+	if err != nil {
+        // handle error
+        fmt.Println(err)
+        os.Exit(2)
+    }
+    // индекс конечной вершины
+	endIndex, err := strconv.Atoi(os.Args[2]) 
+	if err != nil {
+        // handle error
+        fmt.Println(err)
+        os.Exit(2)
+    }
+	relateMat := [size][size]int{} //матрица связей
+	Row := [5]int{}
+	Row = Dijkstra(beginIndex, endIndex, &relateMat)
 	// Вывод пути (начальная вершина оказалась в конце массива из k элементов)
 	fmt.Println("Вывод кратчайшего пути")
-	for i:=prevNodeIndex - 1; i >= 0; i-- {
-		fmt.Println("", visitedNodes[i] - 1)
+	for i := 0; i < 5; i++ {
+		fmt.Println(" ", Row[i])
 	}
 }
